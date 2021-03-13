@@ -59,10 +59,22 @@
 
         console.log ('click');
         event.preventDefault ();
-        bookItem.classList.add (classNames.book.favorite);
         const bookId = bookItem.getAttribute ('data-id');
-        favoriteBooks.push (bookId);
 
+        if (!favoriteBooks.includes(bookId) && !bookItem.classList.contains(classNames.book.favorite)) {
+
+          bookItem.classList.add (classNames.book.favorite);
+          favoriteBooks.push (bookId);
+
+        }
+
+        else {
+
+          bookItem.classList.remove (classNames.book.favorite);
+          const indexOfBook = favoriteBooks.indexOf (bookId);
+          favoriteBooks.splice(indexOfBook, 1);
+
+        }
       });
     }
   }
