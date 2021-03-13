@@ -8,9 +8,18 @@
     },
 
     containerOf: {
-
       bookContainer: '.books-list',
+    },
+
+    book: {
+      cover: '.books-list .book__image',
     }
+  };
+
+  const classNames = {
+    book: {
+      favorite: 'favorite',
+    },
   };
 
   const template = {
@@ -36,6 +45,29 @@
   }
 
   render ();
+
+  function initActions () {
+
+    const favoriteBooks = [];
+
+    const bookCover = document.querySelectorAll (select.book.cover);
+    console.log ('book cover', bookCover);
+
+    for (let bookItem of bookCover) {
+
+      bookItem.addEventListener ('dblclick', function (event) {
+
+        console.log ('click');
+        event.preventDefault ();
+        bookItem.classList.add (classNames.book.favorite);
+        const bookId = bookItem.getAttribute ('data-id');
+        favoriteBooks.push (bookId);
+
+      });
+    }
+  }
+
+  initActions ();
 
 }
 
