@@ -28,6 +28,11 @@
 
   };
 
+  /* Get elements */
+
+  const bookContainer = document.querySelector (select.containerOf.bookContainer);
+  console.log ('books container', bookContainer);
+
   function render () {
 
     for (let book of dataSource.books) {
@@ -35,9 +40,6 @@
       const generatedHTML = template.templateBook (book);
 
       const bookElement = utils.createDOMFromHTML (generatedHTML);
-
-      const bookContainer = document.querySelector (select.containerOf.bookContainer);
-      console.log ('books container', bookContainer);
 
       bookContainer.appendChild (bookElement);
 
@@ -55,22 +57,26 @@
 
     for (let bookItem of bookCover) {
 
-      bookItem.addEventListener ('dblclick', function (event) {
+      bookContainer.addEventListener ('dblclick', function (event) {
 
         console.log ('click');
+
         event.preventDefault ();
+        const clickedElement = event.target.offsetParent;
+        console.log ('clicked element', clickedElement);
+
         const bookId = bookItem.getAttribute ('data-id');
 
-        if (!favoriteBooks.includes(bookId) && !bookItem.classList.contains(classNames.book.favorite)) {
+        if (!favoriteBooks.includes(bookId) && !clickedElement.classList.contains ('.book__image')) {
 
-          bookItem.classList.add (classNames.book.favorite);
+          clickedElement.classList.add (classNames.book.favorite);
           favoriteBooks.push (bookId);
 
         }
 
         else {
 
-          bookItem.classList.remove (classNames.book.favorite);
+          clickedElement.classList.remove (classNames.book.favorite);
           const indexOfBook = favoriteBooks.indexOf (bookId);
           favoriteBooks.splice(indexOfBook, 1);
 
