@@ -13,7 +13,9 @@
 
     book: {
       cover: '.books-list .book__image',
+      form: '.filters form',
     }
+
   };
 
   const classNames = {
@@ -83,6 +85,28 @@
         }
       });
     }
+
+    const filters = [];
+
+    const bookForm = document.querySelector (select.book.form);
+    console.log ('book form', bookForm);
+
+    bookForm.addEventListener ('click', function (event) {
+
+      console.log ('click');
+
+      const clickedElement = event.target;
+      console.log ('clicked element', clickedElement);
+
+      if (clickedElement.tagName === 'input' && clickedElement.type === 'checkbox' && clickedElement.name === 'filter') {
+
+        console.log (clickedElement.value);
+
+      }
+
+    });
+
+
   }
 
   initActions ();
