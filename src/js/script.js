@@ -15,7 +15,6 @@
       cover: '.books-list .book__image',
       form: '.filters form',
     }
-
   };
 
   const classNames = {
@@ -34,6 +33,9 @@
 
   const bookContainer = document.querySelector (select.containerOf.bookContainer);
   console.log ('books container', bookContainer);
+
+  const filters = [];
+
 
   function render () {
 
@@ -86,8 +88,6 @@
       });
     }
 
-    const filters = [];
-
     const bookForm = document.querySelector (select.book.form);
     console.log ('book form', bookForm);
 
@@ -102,14 +102,55 @@
 
         console.log (clickedElement.value);
 
+      } if (clickedElement.checked) {
+
+        filters.push (clickedElement.value);
+        console.log (filters);
       }
 
+      else {
+
+        const indexOfFilters = filters.indexOf (clickedElement.value);
+        filters.splice (indexOfFilters, 1);
+        console.log (filters);
+
+      }
+
+      filterBooks ();
+
     });
-
-
   }
 
   initActions ();
 
+
+  function filterBooks () {
+
+    for (let book of dataSource.books) {
+
+      let shouldBeHidden = false;
+
+      for (let filter of filters) {
+
+        if (!book.details[filter]) {
+
+          shouldBeHidden = true;
+          break;
+        }
+      }
+
+      if (shouldBeHidden) {
+
+        book = document.querySelector ('.book__image[data-id="' + book.id + '"]').classList.add ('hidden');
+
+      }
+
+      else {
+
+        book = document.querySelector ('.book__image[data-id="' + book.id + '"]').classList.remove ('hidden');
+
+      }
+    }
+  }
 }
 
