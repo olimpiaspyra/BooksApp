@@ -61,6 +61,9 @@
       thisBooksList.bookForm = document.querySelector (select.book.form);
       console.log ('book form', thisBooksList.bookForm);
 
+      thisBooksList.bookCover = document.querySelectorAll (select.book.cover);
+      console.log ('book cover', thisBooksList.bookCover);
+
     }
 
     render () {
@@ -94,8 +97,6 @@
 
       thisBooksList.favoriteBooks = [];
 
-      thisBooksList.bookCover = document.querySelectorAll (select.book.cover);
-      console.log ('book cover', thisBooksList.bookCover);
 
       for (let bookItem of thisBooksList.bookCover) {
 
@@ -217,8 +218,10 @@
   }
 
   const app = {
+
     init: function () {
       new BooksList ();
+
     }
   };
 
