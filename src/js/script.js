@@ -36,16 +36,21 @@
 
   const filters = [];
 
-
   function render () {
 
     for (let book of dataSource.books) {
 
-      let rating = book.rating;
-      const ratingWidth = rating*10;
-      const ratingBgc = determineRatingBgc (rating);
+      const generatedHTML = template.templateBook ({
 
-      const generatedHTML = template.templateBook (book, ratingBgc, ratingWidth);
+        id: book.id,
+        name: book.name,
+        price: book.price,
+        rating: book.rating,
+        image: book.image,
+        ratingWidth: book.rating*10,
+        ratingBgc: determineRatingBgc (book.rating),
+
+      });
 
       const bookElement = utils.createDOMFromHTML (generatedHTML);
 
@@ -102,23 +107,23 @@
       const clickedElement = event.target;
       console.log ('clicked element', clickedElement);
 
-      if (clickedElement.tagName === 'input' && clickedElement.type === 'checkbox' && clickedElement.name === 'filter') {
+      if (clickedElement.tagName === 'INPUT' && clickedElement.type === 'checkbox' && clickedElement.name === 'filter') {
 
         console.log (clickedElement.value);
 
-      } if (clickedElement.checked) {
+        if (clickedElement.checked) {
 
-        filters.push (clickedElement.value);
-        console.log (filters);
-      }
+          filters.push (clickedElement.value);
+          console.log (filters);
+        }
 
-      else {
+        else {
 
-        const indexOfFilters = filters.indexOf (clickedElement.value);
-        filters.splice (indexOfFilters, 1);
-        console.log (filters);
+          const indexOfFilters = filters.indexOf (clickedElement.value);
+          filters.splice (indexOfFilters, 1);
+          console.log (filters);
 
-      }
+        }}
 
       filterBooks ();
 
@@ -126,7 +131,6 @@
   }
 
   initActions ();
-
 
   function filterBooks () {
 
@@ -140,6 +144,7 @@
 
           shouldBeHidden = true;
           break;
+
         }
       }
 
