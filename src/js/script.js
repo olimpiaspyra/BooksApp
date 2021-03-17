@@ -97,35 +97,31 @@
 
       thisBooksList.favoriteBooks = [];
 
+      thisBooksList.bookContainer.addEventListener ('dblclick', function (event) {
 
-      for (let bookItem of thisBooksList.bookCover) {
+        console.log ('click');
 
-        thisBooksList.bookContainer.addEventListener ('dblclick', function (event) {
+        event.preventDefault ();
+        const clickedElement = event.target.offsetParent;
+        console.log ('clicked element', clickedElement);
 
-          console.log ('click');
+        const bookId = clickedElement.getAttribute ('data-id');
 
-          event.preventDefault ();
-          const clickedElement = event.target.offsetParent;
-          console.log ('clicked element', clickedElement);
+        if (!thisBooksList.favoriteBooks.includes(bookId) && !clickedElement.classList.contains ('.book__image')) {
 
-          const bookId = bookItem.getAttribute ('data-id');
+          clickedElement.classList.add (classNames.book.favorite);
+          thisBooksList.favoriteBooks.push (bookId);
 
-          if (!thisBooksList.favoriteBooks.includes(bookId) && !clickedElement.classList.contains ('.book__image')) {
+        }
 
-            clickedElement.classList.add (classNames.book.favorite);
-            thisBooksList.favoriteBooks.push (bookId);
+        else {
 
-          }
+          clickedElement.classList.remove (classNames.book.favorite);
+          const indexOfBook = thisBooksList.favoriteBooks.indexOf (bookId);
+          thisBooksList.favoriteBooks.splice(indexOfBook, 1);
 
-          else {
-
-            clickedElement.classList.remove (classNames.book.favorite);
-            const indexOfBook = thisBooksList.favoriteBooks.indexOf (bookId);
-            thisBooksList.favoriteBooks.splice(indexOfBook, 1);
-
-          }
-        });
-      }
+        }
+      });
 
       thisBooksList.bookForm.addEventListener ('click', function (event) {
 
@@ -163,7 +159,7 @@
 
       thisBooksList.filters = [];
 
-      for (let book of dataSource.books) {
+      for (let book of thisBooksList.data) {
 
         let shouldBeHidden = false;
 
@@ -179,13 +175,17 @@
 
         if (shouldBeHidden) {
 
-          book = document.querySelector ('.book__image[data-id="' + book.id + '"]').classList.add ('hidden');
+          const bookItem = document.querySelector ('.book__image[data-id="' + book.id + '"]');
+          bookItem.classList.add ('hidden');
+          console.log ('book item add', bookItem);
 
         }
 
         else {
 
-          book = document.querySelector ('.book__image[data-id="' + book.id + '"]').classList.remove ('hidden');
+          const bookItem = document.querySelector ('.book__image[data-id="' + book.id + '"]');
+          bookItem.classList.remove ('hidden');
+          console.log ('book item remove', bookItem);
 
         }
       }
