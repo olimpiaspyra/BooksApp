@@ -64,6 +64,8 @@
       thisBooksList.bookCover = document.querySelectorAll (select.book.cover);
       console.log ('book cover', thisBooksList.bookCover);
 
+      thisBooksList.filters = [];
+
     }
 
     render () {
@@ -156,8 +158,6 @@
     filterBooks () {
 
       const thisBooksList = this;
-
-      thisBooksList.filters = [];
 
       for (let book of thisBooksList.data) {
 
